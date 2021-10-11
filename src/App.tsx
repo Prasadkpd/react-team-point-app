@@ -1,10 +1,12 @@
 import React from 'react';
+import PointApp from "./component/PointApp";
+import {Container} from "react-bootstrap";
 
 function App() {
   return (
-    <div className="App">
-      Team Point APP
-    </div>
+      <Container fluid={true} className="app d-flex align-items-center justify-content-center">
+        <PointApp />
+      </Container>
   );
 }
 
