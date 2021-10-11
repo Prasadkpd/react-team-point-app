@@ -24,7 +24,7 @@ const Team: React.FC<TeamProps> = (props) => {
             </Col>
         </Row>
         <Row>
-            <Col lg={{span: 3, offset: 9}}>
+            <Col  lg={{span: 5, offset: 7}} className='text-end'>
                 <h5>{team.points}</h5>
             </Col>
         </Row>

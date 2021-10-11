@@ -8,21 +8,16 @@ import TeamList from "./TeamList";
 import CreateTeamForm from "./CreateTeamForm";
 import PointAddForm from "./PointAddForm";
 
-const PointApp: React.FC = () => {
+type PointAppProps = {
+    onTeamChange: (teams : ITeam[]) => void,
+    teams: ITeam[] | null
+}
 
+const PointApp: React.FC<PointAppProps> = (props) => {
+
+    const {onTeamChange, teams} = props;
     const [isShowTeamCreateForm, setIsShowTeamCreateForm] = useState<boolean>(false);
     const [isShowPointAddForm, setIsShowPointAddForm] = useState<boolean>(false);
-
-    const [teams,setTeams] = useState<ITeam[]>([
-        {
-            name:"Sparks",
-            points:234433
-        },
-        {
-            name:"Perks",
-            points:213424
-        }
-    ])
 
     const handleShowCreateTeamForm = () => {
         setIsShowTeamCreateForm(true);
@@ -39,6 +34,13 @@ const PointApp: React.FC = () => {
     const handleCloseAddPointForm = () => {
         setIsShowPointAddForm(false);
     }
+    
+    const handleCreateTeamSubmit = (newTeam: ITeam) => {
+      const newTeamList:ITeam[] = teams ? teams.slice() : [];
+      newTeamList.push(newTeam);
+      onTeamChange(newTeamList);
+      setIsShowTeamCreateForm(false);
+    }
 
     return (
         <Row xs={12} md={8} lg={12} className='app-container d-flex flex-column align-items-center text-center'>
@@ -47,7 +49,8 @@ const PointApp: React.FC = () => {
             <AddTeam onAddClick={handleShowCreateTeamForm}/>
             {
                 isShowTeamCreateForm && <CreateTeamForm onFormClose={handleCloseCreateTeamForm}
-                                                        showFormPopup={isShowTeamCreateForm}/>
+                                                        showFormPopup={isShowTeamCreateForm} 
+                                                        onCreateTeamSubmit={handleCreateTeamSubmit}/>
             }
             {
                 isShowPointAddForm && <PointAddForm onFormClose={handleCloseAddPointForm}
