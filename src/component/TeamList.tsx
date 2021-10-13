@@ -13,10 +13,11 @@ const TeamList: React.FC<TeamListProps> = (props) => {
     const {teams, onAddClicked} = props
 
     return (
-        <Row xs={12} className='pe-0 me-0 my-0' >
+        <Row xs={12} className='pe-0 me-0 my-0 mb-1' >
             <Col xs={12} className='px-2'>
                 {teams && <ListGroup className='m-0'>
-                    {teams.map((team:ITeam, index:number) =>{
+                    {teams.sort((a,b)=> a.points > b.points ? -1 : 1)
+                        .map((team:ITeam, index:number) =>{
                         return (
                             <ListGroup.Item key={index} className='border-0 px-4 me-0 py-0 list-group' >
                                 <Team team={team} index={index} onAddClicked={onAddClicked}/>

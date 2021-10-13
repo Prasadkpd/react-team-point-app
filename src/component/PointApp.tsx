@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Row} from "react-bootstrap";
 import Header from "./Header";
 import Team from "./Team";
@@ -18,6 +18,10 @@ const PointApp: React.FC<PointAppProps> = (props) => {
     const {onTeamChange, teams} = props;
     const [isShowTeamCreateForm, setIsShowTeamCreateForm] = useState<boolean>(false);
     const [isShowPointAddForm, setIsShowPointAddForm] = useState<boolean>(false);
+    const [addClicked, setAddClicked] = useState<boolean>(false);
+    const [teamToAddPoint, setTeamToAddPoint] = useState<number | null>(null);
+    const [team, setTeam] = useState<string>('');
+
 
     const handleShowCreateTeamForm = () => {
         setIsShowTeamCreateForm(true);
@@ -27,8 +31,10 @@ const PointApp: React.FC<PointAppProps> = (props) => {
       setIsShowTeamCreateForm(false)
     }
 
-    const handleShowAddPointForm = () => {
+    const handleShowAddPointForm = (bool: boolean, index: number) => {
       setIsShowPointAddForm(true);
+      setAddClicked(true);
+      setTeamToAddPoint(index);
     }
 
     const handleCloseAddPointForm = () => {
@@ -42,6 +48,24 @@ const PointApp: React.FC<PointAppProps> = (props) => {
       setIsShowTeamCreateForm(false);
     }
 
+    const handleOnIncreasePoint = (newTeam: ITeam) => {
+      const newTeamList: ITeam[] = teams ? teams.slice() : [];
+      if (teamToAddPoint === null){
+          return;
+      }
+        if (teams) {
+            let point = teams[teamToAddPoint].points + newTeam.points;
+            newTeamList[teamToAddPoint].points = point;
+            onTeamChange(newTeamList);
+        }
+    }
+    useEffect(() => {
+        if(teamToAddPoint === null || !teams){
+            return;
+        }
+        setTeam(teams[teamToAddPoint].name);
+    },[teams,teamToAddPoint]);
+
     return (
         <Row xs={12} md={8} lg={12} className='app-container d-flex flex-column align-items-center text-center'>
             <Header/>
@@ -54,7 +78,9 @@ const PointApp: React.FC<PointAppProps> = (props) => {
             }
             {
                 isShowPointAddForm && <PointAddForm onFormClose={handleCloseAddPointForm}
-                                                    showFormPopup={isShowPointAddForm}/>
+                                                    showFormPopup={isShowPointAddForm}
+                                                    onAddPointSubmit={handleOnIncreasePoint}
+                                                    teamNameForPoint={team}/>
             }
         </Row>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Col, Row} from "react-bootstrap";
 import {ITeam} from "../types/Types";
-import { FaPlusCircle } from "react-icons/fa";
+import { FaPlusCircle} from "react-icons/fa";
 
 type TeamProps = {
     team : ITeam,
@@ -22,6 +22,9 @@ const Team: React.FC<TeamProps> = (props) => {
             <Col xs="1" lg="1" className="text-end  p-1">
                 <FaPlusCircle size={22} className='icon' onClick={() => onAddClicked(true,index)}/>
             </Col>
+            {/*<Col xs="1" lg="1" className="text-end  p-1">*/}
+            {/*    <FaMinusCircle size={22} className='icon' onClick={() => onAddClicked(true,index)}/>*/}
+            {/*</Col>*/}
         </Row>
         <Row>
             <Col  lg={{span: 5, offset: 7}} className='text-end'>
