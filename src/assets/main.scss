@@ -27,3 +27,15 @@
   background-color: $container-bg;
   color: $font-primary-color;
 }
+
+@media screen and (max-width: 768px) {
+  .app-container {
+    width: 60vw;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .app-container {
+    width: 90vw;
+  }
+}
