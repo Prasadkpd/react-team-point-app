@@ -5,12 +5,13 @@ import Team from "./Team";
 
 type TeamListProps = {
     teams: ITeam[] | null,
-    onAddClicked: (bool: boolean, index: number) => void
+    onAddClicked: (bool: boolean, index: number) => void,
+    onReduceClicked: (bool: boolean, index: number) => void
 }
 
 const TeamList: React.FC<TeamListProps> = (props) => {
 
-    const {teams, onAddClicked} = props
+    const {teams, onAddClicked, onReduceClicked} = props
 
     return (
         <Row xs={12} className='pe-0 me-0 my-0 mb-1' >
@@ -20,7 +21,8 @@ const TeamList: React.FC<TeamListProps> = (props) => {
                         .map((team:ITeam, index:number) =>{
                         return (
                             <ListGroup.Item key={index} className='border-0 px-4 me-0 py-0 list-group' >
-                                <Team team={team} index={index} onAddClicked={onAddClicked}/>
+                                <Team team={team} index={index} onAddClicked={onAddClicked}
+                                      onReduceClicked={onReduceClicked}/>
                             </ListGroup.Item>
                         )
                     })
